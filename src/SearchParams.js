@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // pet is a client
 import pet, { ANIMALS } from "@frontendmasters/pet";
 import useDropdown from "./Dropdown";
+import Results from "./Results";
 
 const SearchParams = () => {
   // this is a hook
@@ -11,7 +12,19 @@ const SearchParams = () => {
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
+  const [pets, setPets] = useState([]);
 
+  async function requestPets() {
+    const { animals } = await pet.animals({
+      location,
+      breed,
+      type: animal,
+    });
+
+    setPets(animals || []);
+
+    //console.log(animals);
+  }
   // hooks never go inside of if statements or for loops!!!!
   //console.log("state of location: " + location);
 
@@ -34,7 +47,12 @@ const SearchParams = () => {
   return (
     <div className="search-params">
       <h1>{location}</h1>
-      <form>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          requestPets();
+        }}
+      >
         <label htmlFor="location">
           Location
           <input
@@ -48,6 +66,7 @@ const SearchParams = () => {
         <BreedDropdown />
         <button>Submit</button>
       </form>
+      <Results pets={pets} />
     </div>
   );
 };
