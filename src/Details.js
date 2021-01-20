@@ -1,6 +1,7 @@
 import React from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
+import ErrorBoundary from "./ErrorBoundary";
 
 // no hooks in class components
 class Details extends React.Component {
@@ -15,6 +16,7 @@ class Details extends React.Component {
   state = { loading: true };
 
   componentDidMount() {
+    // throw new Error("lol");
     // props are immutable
     // called only once
     // e.g. for API requests
@@ -52,4 +54,14 @@ class Details extends React.Component {
   }
 }
 
-export default Details;
+export default function DetailsWithErrorBoundary(props) {
+  // spreads the props in the details
+  // when component doesn't care what the props are
+  // it gets the id from parent component
+  // same as <Deatils id={props.id} />
+  return (
+    <ErrorBoundary>
+      <Details {...props} />
+    </ErrorBoundary>
+  );
+}
