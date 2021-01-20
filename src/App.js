@@ -9,7 +9,7 @@ const App = () => {
   // usually const [color, setColor]
   // now we're grabbing the whole array from above
   // themeHook is the global app state
-  const themeHook = useState("darkblue");
+  const themeHook = useState("peru");
   return (
     <React.StrictMode>
       <ThemeContext.Provider value={themeHook}>
