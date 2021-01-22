@@ -31,5 +31,6 @@
         "react": {
             "version": "detect"
         }
-    }
+    },
+    "sourceMap": false
 }
